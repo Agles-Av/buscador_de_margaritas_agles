@@ -25,12 +25,19 @@
         placeholder="Escribe el nombre del trago"
         required
       />
-      <button disabled id="btnBuscar"  class="btn btn-primary mb-4" onclick="buscar()">Buscar</button>
+      <button
+        disabled
+        id="btnBuscar"
+        class="btn btn-primary mb-4"
+        onclick="buscar()"
+      >
+        Buscar
+      </button>
       <div id="resultado" class="row g-3"></div>
     </div>
 
     <script>
-         const input = document.getElementById("search");
+      const input = document.getElementById("search");
       const btnBuscar = document.getElementById("btnBuscar");
 
       // Habilitar el botón solo si hay texto
@@ -59,55 +66,52 @@
           return;
         }
 
-        drinks.forEach((drink) => {
+        drinks.forEach((drink, index) => {
           const card = `
-        <div class="col-md-4">
-          <div class="card h-100 shadow">
-            <img src="${drink.strDrinkThumb}" class="card-img-top" alt="${
+    <div class="col-md-4">
+      <div class="card h-100 shadow">
+        <img src="${drink.strDrinkThumb}" class="card-img-top" alt="${
             drink.strDrink
           }">
-            <div class="card-body">
-              <h5 class="card-title">${drink.strDrink}</h5>
-              <p class="card-text"><strong>Categoría:</strong> ${
-                drink.strCategory
-              }</p>
-              <p class="card-text"><strong>Vaso:</strong> ${drink.strGlass}</p>
-             
+        <div class="card-body">
+          <h5 class="card-title">${drink.strDrink}</h5>
+          <p class="card-text"><strong>Categoría:</strong> ${
+            drink.strCategory
+          }</p>
+          <p class="card-text"><strong>Vaso:</strong> ${drink.strGlass}</p>
+        </div>
+        <div class="accordion" id="accordion-${index}">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-${index}">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse-${index}"
+                aria-expanded="false"
+                aria-controls="collapse-${index}"
+              >
+                Detalles
+              </button>
+            </h2>
+            <div
+              id="collapse-${index}"
+              class="accordion-collapse collapse"
+              aria-labelledby="heading-${index}"
+              data-bs-parent="#accordion-${index}"
+            >
+              <div class="accordion-body">
+                <p>${
+                  drink.strInstructionsES
+                    ? drink.strInstructionsES
+                    : drink.strInstructions
+                }</p>
+              </div>
             </div>
-            <div class="accordion" id="accordionPanelsStayOpenExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-      <button
-        class="accordion-button collapsed"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#panelsStayOpen-collapseOne"
-        aria-expanded="false"
-        aria-controls="panelsStayOpen-collapseOne"
-      >
-        Detalles
-      </button>
-    </h2>
-    <div
-      id="panelsStayOpen-collapseOne"
-      class="accordion-collapse collapse"
-      aria-labelledby="panelsStayOpen-headingOne"
-    >
-      <div class="accordion-body">
-        <p>${
-          drink.strInstructionsES
-            ? drink.strInstructionsES
-            : drink.strInstructions
-        }</p>
-      </div>
-    </div>
-  </div>
-</div>
-
           </div>
-        </div>`;
-
-
+        </div>
+      </div>
+    </div>`;
           contenedor.innerHTML += card;
         });
       }
